@@ -67,7 +67,7 @@ let deploy = function (deploy){
             core.info("===== CHECH ONLY ====");
             argsDeploy.push('--checkonly');
         }
-		
+		core.info("deploy.testlevel==="+deploy.testlevel);
         if(deploy.testlevel == "RunSpecifiedTests"){
             testClassesTmp = getApexTestClass(manifestTmp, deploy.defaultSourcePath+'/classes', deploy.defaultTestClass);
 
@@ -87,8 +87,11 @@ let deploy = function (deploy){
 		else if (deploy.testlevel == "NoTests")
 		{
 			core.info("==========No Tests =============");
+			//argsDeploy.push("--testlevel");
+            //argsDeploy.push(deploy.testlevel);
 		}
 		else{
+			core.info("No Test RUN "+deploy.testlevel);
             argsDeploy.push("--testlevel");
             argsDeploy.push(deploy.testlevel);
         }
