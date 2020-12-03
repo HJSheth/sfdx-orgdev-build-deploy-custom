@@ -86,7 +86,7 @@ let deploy = function (deploy){
         }
 		else if (deploy.testlevel == "NoTests")
 		{
-			core.info("No Tests ");
+			core.info("==========No Tests =============");
 		}
 		else{
             argsDeploy.push("--testlevel");
