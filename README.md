@@ -1,6 +1,8 @@
 # SFDX Org Development Model Github Action - Build & Deploy
 
-This repository implements a Github Action that's is a variation of the [Bitbucket Pipelines examples with org development](https://github.com/forcedotcom/sfdx-bitbucket-org/).
+This is updated version of https://github.com/tiagonnascimento/sfdx-orgdev-build-deploy#readme. It adds options to not run any test classes.
+I will be creating PR on above repo once it works fine.
+
 
 This action is usefull to deploy to non-scratch orgs (sandbox or production) with [Github Workflow](https://guides.github.com/introduction/flow/).
 
