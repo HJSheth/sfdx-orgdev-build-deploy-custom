@@ -4,6 +4,8 @@ This is updated version of https://github.com/tiagonnascimento/sfdx-orgdev-build
 I will be creating PR on above repo once it works fine.
 
 
+
+
 This action is usefull to deploy to non-scratch orgs (sandbox or production) with [Github Workflow](https://guides.github.com/introduction/flow/).
 
 It's a Javascript [Github Action](https://github.com/features/actions), that will once is executed will run the following steps:
@@ -24,6 +26,34 @@ It's a Javascript [Github Action](https://github.com/features/actions), that wil
 - USERNAME: holds the username that will be used to connect to the target org/sandbox
 - DECRYPTION_KEY: holds the Key value you generated on step #6 of the referred repo - will be used to decrypt the certificate
 - DECRYPTION_IV: holds the IV value you generated on step #6 of the referred repo - will be used to decrypt the certificate
+
+4. Generate Self Signed Certificate
+
+-Follow steps from https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm 
+to generate self signed certificate. We will use this certificate with connected app 
+for authentication when doing deployment.
+
+5. Encrypt Certificate key.
+	1. To generate key and iv
+	 openssl enc -aes-256-cbc -k 767676 -P -md sha1 -nosalt
+	2. Store the key / IV returned from above command. Use following command to encrypt your certificate key.
+	Repalce key and IV with appropriate values
+	openssl enc -aes-256-cbc -in server.key -out server.key.enc -base64 -nosalt 
+	-K {KEY} -iv {IV} 
+
+6. Configure Connected App on SFDC
+	1. Go to Setup --> App Manager --> New Connected App
+	2. Enter appropriate name for the app
+	3. Choose following OAuth Scopes
+		1.Access and Manage your data(api)
+		2.Allow access to your open id(openid)
+		3.Perform request on your behalf at anytime (refresh_token, offline_access)
+		4.Provide access to your data via web(web).
+	4. Check use digital signatures and upload certificate
+	5. Save the app. Then click on Manage
+	6. Choose Admin Approve users are pre authorized. 
+	7. Add appropriate profile with the app. Ideally System Admin.
+
 
 ## Usage Sample
 
@@ -54,10 +84,10 @@ jobs:
               with:
                 type: 'sandbox'
                 certificate_path: devops/server.key.enc
-                decryption_key: ${{ secrets.DECRYPTION_KEY_NON_PRODUCTIVE }}
-                decryption_iv: ${{ secrets.DECRYPTION_IV_NON_PRODUCTIVE }}
-                client_id: ${{ secrets.CONSUMER_KEY_TI01 }}
-                username: ${{ secrets.USERNAME_TI01 }}
+                decryption_key: ${{ secrets.DECRYPTION_KEY }}
+                decryption_iv: ${{ secrets.DECRYPTION_IV }}
+                client_id: ${{ secrets.CONSUMER_KEY }}
+                username: ${{ secrets.USERNAME }}
                 checkonly: false
                 manifest_path: manifest/package-01.xml,manifest/package-02.xml,manifest/package-03.xml
                 destructive_path: destructive
