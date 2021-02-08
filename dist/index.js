@@ -16474,7 +16474,7 @@ try {
   sfdx.login(cert,login);
 
   //Deply/Checkonly to Org
-  sfdx.deploy(deploy);
+  sfdx.deploy(deploy,login);
   
   //Destructive deploy
   sfdx.destructiveDeploy(deploy);
@@ -16615,7 +16615,7 @@ let login = function (cert, login){
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
 };
 
-let deploy = function (deploy){
+let deploy = function (deploy,login){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
@@ -16652,7 +16652,8 @@ let deploy = function (deploy){
             argsDeploy.push(deploy.testlevel);
         }
 
-        execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
+        const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
+        execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', 'https://test.saleforce.com', '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
 
         execCommand.run('ls', ['-l','.sfdx/orgs']);
         execCommand.run('sfdx', argsDeploy);
