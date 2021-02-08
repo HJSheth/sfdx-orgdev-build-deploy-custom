@@ -16607,7 +16607,9 @@ let login = function (cert, login){
 
     core.info('==== Authenticating in the target org');
     const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
-    core.info('Instance URL: ' + instanceurl);
+    core.info('Instance URL111: ' + instanceurl);
+    execCommand.run('rm', [ '-rf', ' .sfdx']);
+     core.info('Deleted sfdx folder: ' + instanceurl);
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', login.username, '--setalias', 'sfdc']);
 };
 
@@ -16621,7 +16623,7 @@ let deploy = function (deploy){
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json'];
+        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '--targetusername', login.username, '--json'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
