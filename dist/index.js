@@ -16609,6 +16609,8 @@ let login = function (cert, login){
     const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
     core.info('Instance URL111: ' + instanceurl);
     execCommand.run('rm', [ '-rf', ' .sfdx']);
+
+    execCommand.run('sfdx', [ '--version']);
      core.info('Deleted sfdx: ' + instanceurl);
     execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
 };
