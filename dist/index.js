@@ -16610,7 +16610,7 @@ let login = function (cert, login){
     core.info('Instance URL111: ' + instanceurl);
     execCommand.run('rm', [ '-rf', ' .sfdx']);
      core.info('Deleted sfdx: ' + instanceurl);
-    execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.qa3', '--setalias', 'sfdc']);
+    execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
 };
 
 let deploy = function (deploy){
@@ -16623,7 +16623,7 @@ let deploy = function (deploy){
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '-u', 'hsheth@cci.com.tr.qa3', '--json'];
+        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '-u', 'hsheth@cci.com.tr.sf.qa3', '--json'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
