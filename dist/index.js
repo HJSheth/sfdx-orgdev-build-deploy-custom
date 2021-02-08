@@ -16473,9 +16473,8 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
-  sleep(100000).then(() => {
-    sfdx.deploy(deploy,login);
-  });
+ var waitTill = new Date(new Date().getTime() + 100 * 1000);
+ while(waitTill > new Date()){}
 
   //Deply/Checkonly to Org
  
