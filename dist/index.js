@@ -16478,7 +16478,7 @@ try {
 
   //Deply/Checkonly to Org
  
-  
+  sfdx.deploy(deploy);
   //Destructive deploy
   sfdx.destructiveDeploy(deploy);
 
