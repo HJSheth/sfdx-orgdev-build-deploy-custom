@@ -16473,10 +16473,12 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
-  await sleep(10000);
+  sleep(100000).then(() => {
+    sfdx.deploy(deploy,login);
+  });
 
   //Deply/Checkonly to Org
-  sfdx.deploy(deploy,login);
+ 
   
   //Destructive deploy
   sfdx.destructiveDeploy(deploy);
