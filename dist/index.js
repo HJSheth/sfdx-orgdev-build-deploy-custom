@@ -16473,6 +16473,8 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
+  await sleep(10000);
+
   //Deply/Checkonly to Org
   sfdx.deploy(deploy,login);
   
@@ -16653,7 +16655,7 @@ let deploy = function (deploy,login){
         }
 
         const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
-        execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', 'https://test.saleforce.com', '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
+       
 
         execCommand.run('ls', ['-la']);
         execCommand.run('sfdx', argsDeploy);
