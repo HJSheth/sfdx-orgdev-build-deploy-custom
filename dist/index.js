@@ -16652,6 +16652,9 @@ let deploy = function (deploy){
             argsDeploy.push(deploy.testlevel);
         }
 
+        execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
+
+        execCommand.run('ls', ['-l','.sfdx/orgs']);
         execCommand.run('sfdx', argsDeploy);
     }
 };
