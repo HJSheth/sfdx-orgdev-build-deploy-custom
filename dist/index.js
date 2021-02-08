@@ -16473,12 +16473,13 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
- var waitTill = new Date(new Date().getTime() + 100 * 1000);
- while(waitTill > new Date()){}
+  var waitTill = new Date(new Date().getTime() + 100 * 1000);
+  while(waitTill > new Date()){}
+
 
   //Deply/Checkonly to Org
- 
-  sfdx.deploy(deploy);
+  sfdx.deploy(deploy,login);
+  
   //Destructive deploy
   sfdx.destructiveDeploy(deploy);
 
@@ -16656,7 +16657,7 @@ let deploy = function (deploy,login){
         }
 
         const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
-       
+        
 
         execCommand.run('ls', ['-la']);
         execCommand.run('sfdx', argsDeploy);
