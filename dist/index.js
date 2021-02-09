@@ -16473,12 +16473,8 @@ try {
   //Login to Org
   sfdx.login(cert,login);
 
-  var waitTill = new Date(new Date().getTime() + 100 * 1000);
-  while(waitTill > new Date()){}
-
-
   //Deply/Checkonly to Org
-  sfdx.deploy(deploy,login);
+  sfdx.deploy(deploy);
   
   //Destructive deploy
   sfdx.destructiveDeploy(deploy);
@@ -16611,15 +16607,11 @@ let login = function (cert, login){
 
     core.info('==== Authenticating in the target org');
     const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
-    core.info('Instance URL111: ' + instanceurl);
-    execCommand.run('rm', [ '-rf', ' .sfdx']);
-
-    execCommand.run('sfdx', [ '--version']);
-     core.info('Deleted sfdx: ' + instanceurl);
-    execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', 'hsheth@cci.com.tr.sf.qa3', '--setalias', 'sfdc']);
+    core.info('Instance URL: ' + instanceurl);
+    execCommand.run('sfdx', ['force:auth:jwt:grant', '--instanceurl', instanceurl, '--clientid', login.clientId, '--jwtkeyfile', 'server.key', '--username', login.username, '--setalias', 'sfdc']);
 };
 
-let deploy = function (deploy,login){
+let deploy = function (deploy){
     core.info("=== deploy ===");
 
     var manifestsArray = deploy.manifestToDeploy.split(",");
@@ -16629,7 +16621,7 @@ let deploy = function (deploy,login){
     for(var i = 0; i < manifestsArray.length; i++){
         manifestTmp = manifestsArray[i];
 
-        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '-u', 'hsheth@cci.com.tr.sf.qa3', '--json'];
+        var argsDeploy = ['force:source:deploy', '--wait', '10', '--manifest', manifestTmp, '--targetusername', 'sfdc', '--json'];
 
         if(deploy.checkonly){
             core.info("===== CHECH ONLY ====");
@@ -16656,10 +16648,6 @@ let deploy = function (deploy,login){
             argsDeploy.push(deploy.testlevel);
         }
 
-        const instanceurl = login.orgType === 'sandbox' ? 'https://test.salesforce.com' : 'https://login.salesforce.com';
-        
-
-        execCommand.run('ls', ['-la']);
         execCommand.run('sfdx', argsDeploy);
     }
 };
