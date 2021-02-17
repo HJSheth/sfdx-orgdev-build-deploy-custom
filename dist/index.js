@@ -16465,6 +16465,7 @@ try {
   deploy.defaultSourcePath = core.getInput('default_source_path');
   deploy.defaultTestClass = core.getInput('default_test_class');
   deploy.manifestToDeploy = core.getInput('manifest_path');
+  deploy.testToRun = core.getInput('testclass_names');
   deploy.destructivePath = core.getInput('destructive_path');
   deploy.dataFactory = core.getInput('data_factory');
   deploy.checkonly = (core.getInput('checkonly') === 'true' )? true : false;
@@ -16572,7 +16573,7 @@ let getApexTestClass = function(manifestpath, classesPath, defaultTestClass){
     var testClasses = [];
     var xml = fs.readFileSync(manifestpath, "utf8");
     var fileContentTmp = null;
-
+	console.log('manifestpath==='+manifestpath);
     parser.parseString(xml, function (err, result) {
         for(var i in result.Package.types){
             typeTmp = result.Package.types[i];
@@ -16629,7 +16630,7 @@ let deploy = function (deploy){
         }
 
         if(deploy.testlevel == "RunSpecifiedTests"){
-            testClassesTmp = getApexTestClass(manifestTmp, deploy.defaultSourcePath+'/classes', deploy.defaultTestClass);
+            //testClassesTmp = getApexTestClass(manifestTmp, deploy.defaultSourcePath+'/classes', deploy.defaultTestClass);
 
             core.info("las clases son : "  + testClassesTmp);
             
