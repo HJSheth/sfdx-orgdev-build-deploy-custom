@@ -16627,22 +16627,20 @@ let deploy = function (deploy){
             core.info("===== CHECH ONLY ====");
             argsDeploy.push('--checkonly');
         }
-		argsDeploy.push("--testlevel");
-        argsDeploy.push("RunSpecifiedTests");
+		
 		core.info("Test___"+deploy.testToRun);
-        argsDeploy.push("--runtests");
-        argsDeploy.push(deploy.testToRun);
-        /*if(deploy.testlevel == "RunSpecifiedTests"){
+        core.info("deploy.testlevel___"+deploy.testlevel);
+        if(deploy.testlevel == "RunSpecifiedTests"){
             //testClassesTmp = getApexTestClass(manifestTmp, deploy.defaultSourcePath+'/classes', deploy.defaultTestClass);
 
-            core.info("las clases son : "  + testClassesTmp);
+            core.info("las clases son : "  + deploy.testToRun);
             
             if(testClassesTmp){
                 argsDeploy.push("--testlevel");
                 argsDeploy.push(deploy.testlevel);
     
                 argsDeploy.push("--runtests");
-                argsDeploy.push(testClassesTmp);
+                argsDeploy.push(deploy.testToRun);
             }else{
                 argsDeploy.push("--testlevel");
                 argsDeploy.push("RunLocalTests");
@@ -16650,7 +16648,7 @@ let deploy = function (deploy){
         }else{
             argsDeploy.push("--testlevel");
             argsDeploy.push(deploy.testlevel);
-        }*/
+        }
 
         execCommand.run('sfdx', argsDeploy);
     }
