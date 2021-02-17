@@ -16635,7 +16635,7 @@ let deploy = function (deploy){
 
             core.info("las clases son : "  + deploy.testToRun);
             
-            if(testClassesTmp){
+            if(deploy.testToRun){
                 argsDeploy.push("--testlevel");
                 argsDeploy.push(deploy.testlevel);
     
