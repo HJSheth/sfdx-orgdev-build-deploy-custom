@@ -49,6 +49,10 @@ inputs:
         description: 'Path on the current repository to the apex script that will be used to create data required by the package'
         required: false
 
+    testclass_names:
+        description: 'Test class names'
+        required: false
+
 runs:
     using: 'node12'
     main: 'dist/index.js'
